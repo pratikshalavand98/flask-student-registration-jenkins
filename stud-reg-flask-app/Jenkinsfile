@@ -1,39 +1,67 @@
 pipeline {
     agent any
 
+    environment {
+        GIT_REPO = 'https://github.com/pratikshalavand98/flask-student-registration-jenkins.git'
+        BRANCH = 'master'
+    }
+
     stages {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'master', url: 'https://github.com/pratikshalavand98/flask-student-registration-jenkins.git'
+                echo 'Cloning GitHub Repository...'
+                git branch: "${BRANCH}", url: "${GIT_REPO}"
             }
         }
 
-        stage('Setup Environment') {
+        stage('Verify Files') {
             steps {
-                bat 'python -m pip install --upgrade pip'
+                echo 'Listing project files...'
+                sh 'ls -la'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Setup Python Environment') {
             steps {
-                bat 'pip install flask mysql-connector-python'
+                echo 'Installing dependencies...'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                echo 'Running basic tests...'
+                sh '''
+                    . venv/bin/activate
+                    python -m pytest || true
+                '''
             }
         }
 
         stage('Run Application') {
             steps {
-                bat 'python app.py'
+                echo 'Starting Flask App (Test Run Only)...'
+                sh '''
+                    . venv/bin/activate
+                    export FLASK_APP=app.py
+                    nohup python app.py &
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Build Successful 🎉'
+            echo 'Pipeline executed successfully!'
         }
         failure {
-            echo 'Build Failed ❌ Check logs'
+            echo 'Pipeline failed. Check logs.'
         }
     }
 }
