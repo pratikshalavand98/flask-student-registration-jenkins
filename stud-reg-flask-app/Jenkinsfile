@@ -3,9 +3,15 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
+        stage('Checkout Code') {
             steps {
                 git branch: 'master', url: 'https://github.com/pratikshalavand98/flask-student-registration-jenkins.git'
+            }
+        }
+
+        stage('Setup Environment') {
+            steps {
+                bat 'python -m pip install --upgrade pip'
             }
         }
 
@@ -15,10 +21,19 @@ pipeline {
             }
         }
 
-        stage('Run App') {
+        stage('Run Application') {
             steps {
                 bat 'python app.py'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build Successful 🎉'
+        }
+        failure {
+            echo 'Build Failed ❌ Check logs'
         }
     }
 }
