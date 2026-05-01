@@ -5,27 +5,25 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git branch: 'master',
-                url: 'https://github.com/pratikshalavand98/flask-student-registration-jenkins.git'
+                git 'https://github.com/pratikshalavand98/flask-student-registration-jenkins.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'python -m pip install --upgrade pip'
-                bat 'pip install -r requirements.txt'
+                bat '"C:\\Windows\\System32\\cmd.exe" /c pip install -r requirements.txt'
             }
         }
 
         stage('Python Syntax Check') {
             steps {
-                bat 'python -m py_compile app.py'
+                bat '"C:\\Windows\\System32\\cmd.exe" /c python --version'
             }
         }
 
-        stage('Build Complete') {
+        stage('Run Flask App') {
             steps {
-                echo 'Flask Student Registration Build Successful 🎉'
+                bat '"C:\\Windows\\System32\\cmd.exe" /c python app.py'
             }
         }
     }
