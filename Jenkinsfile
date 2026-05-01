@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        APP_PORT = "5000"
-    }
-
     stages {
 
         stage('Clone Repository') {
@@ -15,23 +11,23 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Application') {
             steps {
-                sh 'nohup python app.py &'
+                bat 'python app.py'
             }
         }
     }
 
     post {
         success {
-            echo "Application deployed successfully 🚀"
+            echo 'Build Successful ✅'
         }
         failure {
-            echo "Build failed ❌"
+            echo 'Build Failed ❌'
         }
     }
 }
