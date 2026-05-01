@@ -3,37 +3,35 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
+        stage('Clean Workspace') {
             steps {
-                git 'https://github.com/pratikshalavand98/flask-student-registration-jenkins.git'
+                deleteDir()
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Clone Repo') {
             steps {
-                bat '"C:\\Windows\\System32\\cmd.exe" /c pip install -r requirements.txt'
+                git branch: 'master',
+                url: 'https://github.com/pratikshalavand98/flask-student-registration-jenkins.git'
             }
         }
 
-        stage('Python Syntax Check') {
+        stage('Install Python Packages') {
             steps {
-                bat '"C:\\Windows\\System32\\cmd.exe" /c python --version'
+                powershell 'pip install -r requirements.txt'
             }
         }
 
-        stage('Run Flask App') {
+        stage('Check Python') {
             steps {
-                bat '"C:\\Windows\\System32\\cmd.exe" /c python app.py'
+                powershell 'python --version'
             }
         }
-    }
 
-    post {
-        success {
-            echo 'Build Successful ✅'
-        }
-        failure {
-            echo 'Build Failed ❌'
+        stage('Build Success') {
+            steps {
+                echo "Flask App Build Successful 🎉"
+            }
         }
     }
 }
