@@ -274,8 +274,10 @@ Lambda function executed after deployment.
 
 ## 👨‍💻 Author
 
-Pratiksha Lavand
-
+**Pratiksha Lavand**  
+☁️ Aspiring Cloud & DevOps Engineer  
+🔗 GitHub: [github.com/your-username](https://github.com/pratikshalavand98/)  
+🔗 LinkedIn: [linkedin.com/in/your-linkedin-id](https://www.linkedin.com/in/pratiksha-lavand/)
 
 ---
 
