@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm install   # cache use karega
+RUN npm install   
 
 COPY . .
 
