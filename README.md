@@ -55,7 +55,7 @@ flask-student-registration-jenkins/
 ### 🔹 1. Clone Repository
 
 ```
-git clone https://github.com/<your-username>/flask-student-registration-jenkins.git
+git clone https://github.com/<your-username>/flask-student-registration-jenkins
 cd flask-student-registration-jenkins
 ```
 
