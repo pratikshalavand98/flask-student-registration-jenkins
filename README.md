@@ -215,35 +215,35 @@ Pipeline stages:
 ### 🖥️ EC2 Instance Running
 Shows that the server is up and Jenkins is hosted on it.
 
-![EC2 Running](image/ec2-running.png)
+![EC2 Running](images/ec2-running.png)
 
 ---
 
 ### ⚙️ Jenkins Pipeline Success
 Pipeline executed successfully with all stages completed.
 
-![Jenkins Pipeline](image/jenkins-success.png)
+![Jenkins Pipeline](images/jenkins-success.png)
 
 ---
 
 ### 🐳 Docker Build Logs
 Docker image build process inside Jenkins.
 
-![Docker Build](image/docker-build.png)
+![Docker Build](images/docker-build.png)
 
 ---
 
 ### 📦 Amazon ECR Repository
 Docker image successfully pushed to ECR.
 
-![ECR Image](image/ecr-image.png)
+![ECR Image](images/ecr-image.png)
 
 ---
 
 ### ⚡ AWS Lambda Triggered
 Lambda function executed after deployment.
 
-![Lambda Logs](image/lambda-logs.png)
+![Lambda Logs](images/lambda-logs.png)
   
 
 ---
