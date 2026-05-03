@@ -156,6 +156,9 @@ pipeline {
 
 ## 📸 Screenshots
 
+### Architecture Diagram
+![Architecture Diagram](images/Flask-based student registration architecture diagram)
+
 ### Jenkins Build Status
 ![Jenkins Build Status](images/Jenkins%20Build%20Status.png)
 
