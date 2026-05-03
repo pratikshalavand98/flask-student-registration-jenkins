@@ -156,14 +156,20 @@ pipeline {
 
 ## 📸 Screenshots
 
-### Registration Form
-![Registration Form](images/registration_form.png)
+### Jenkins Build Status
+![Jenkins Build Status](images/Jenkins%20Build%20Status.png)
 
-### Student List Page
-![Student List](images/students_page.png)
+### Jenkins Console Output
+![Jenkins Console Output](images/Jenkins%20Console%20Output.png)
 
-### Jenkins Pipeline Success
-![Jenkins Pipeline](images/jenkins_pipeline.png)
+### Registered Students List
+![Registered Students List](images/Registered%20Students%20List.png)
+
+### Student Registration Form
+![Student Registration Form](images/Student%20Registration%20Form.png)
+
+### Student Flask Pipeline
+![Student Flask Pipeline](images/student-flask-pipeline.png)
 
 ---
 
