@@ -156,11 +156,14 @@ pipeline {
 
 ## 📸 Screenshots
 
-(Add screenshots here)
+### Registration Form
+![Registration Form](images/registration_form.png)
 
-* Registration Form
-* Student List Page
-* Jenkins Pipeline Success
+### Student List Page
+![Student List](images/students_page.png)
+
+### Jenkins Pipeline Success
+![Jenkins Pipeline](images/jenkins_pipeline.png)
 
 ---
 
