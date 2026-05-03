@@ -1,279 +1,206 @@
-# 🚀 Automated Docker Image Deployment to Amazon ECR with Jenkins & Lambda
+# 🎓 Flask Student Registration Web Application (Jenkins CI/CD)
 
-## 📌 Project Title
+## 📌 Project Overview
 
-Automated Docker Image Deployment to Amazon ECR with Jenkins and Lambda Integration
+This project is a web-based Student Registration System developed using Flask.
+It allows users to register student details through a web form and stores the data securely in a MySQL database.
 
----
-
-## 🧠 Scenario
-
-The organization was manually building and pushing Docker images, causing:
-
-* Versioning issues
-* Deployment delays
-
-To solve this, a CI/CD pipeline was implemented using Jenkins to:
-
-* Automatically build Docker images
-* Push images to Amazon ECR
-* Trigger AWS Lambda for post-deployment automation
+The application is integrated with Jenkins to automate the build and deployment process, ensuring continuous integration.
 
 ---
 
-## 🎯 Objective
+## 🚀 Features
 
-To design a fully automated CI/CD pipeline that:
-
-1. Builds Docker images on code changes
-2. Pushes images to Amazon ECR
-3. Triggers AWS Lambda for post-deployment tasks
+* Student Registration Form
+* Server-side and client-side validation
+* Data stored in MySQL database
+* View all registered students in tabular format
+* Flash messages for success/failure
+* Jenkins CI/CD pipeline integration
 
 ---
 
-## 🏗️ Architecture Diagram
+## 🛠️ Technology Stack
+
+* **Frontend:** HTML, CSS
+* **Backend:** Python (Flask)
+* **Database:** MySQL
+* **Version Control:** Git & GitHub
+* **CI/CD Tool:** Jenkins
+* **Deployment (Optional):** AWS EC2
+
+---
+
+## 📁 Project Structure
 
 ```
-        +----------------+
-        |   GitHub Repo  |
-        +--------+-------+
-                 |
-                 v
-        +----------------+
-        |    Jenkins     |
-        |  (CI/CD Tool)  |
-        +--------+-------+
-                 |
-        Build Docker Image
-                 |
-                 v
-        +----------------+
-        |   Docker Image |
-        +--------+-------+
-                 |
-        Push to ECR
-                 |
-                 v
-        +-----------------------------+
-        |   Amazon ECR (Repository)   |
-        +-------------+---------------+
-                      |
-          Event / Trigger
-                      |
-                      v
-        +-----------------------------+
-        |     AWS Lambda Function     |
-        +-----------------------------+
-                      |
-            Logs / Notifications
-                      |
-                      v
-        +-----------------------------+
-        |   CloudWatch / SNS / DB     |
-        +-----------------------------+
+flask-student-registration-jenkins/
+│── app.py
+│── requirements.txt
+│── Jenkinsfile
+│── README.md
+│
+├── templates/
+│   ├── register.html
+│   ├── students.html
+│
+├── static/
+│   └── style.css (optional)
 ```
 
 ---
 
-## 🛠️ Technologies Used
+## ⚙️ Setup Instructions
 
-* Jenkins
-* Docker
-* Amazon ECR
-* AWS Lambda
-* GitHub
-* AWS CLI
-
----
-
-## ⚙️ Workflow
-
-1. Developer pushes code to GitHub
-2. Jenkins pipeline is triggered
-3. Jenkins pulls latest code
-4. Docker image is built
-5. Image is tagged with build number
-6. Image is pushed to Amazon ECR
-7. Lambda function is triggered
-8. Logs/notifications are generated
-
----
-
-## 📂 Project Structure
+### 🔹 1. Clone Repository
 
 ```
-.
-├── Dockerfile
-├── app.js
-├── package.json
-├── Jenkinsfile
-└── README.md
+git clone https://github.com/<your-username>/flask-student-registration-jenkins
+cd flask-student-registration-jenkins
 ```
 
----
+### 🔹 2. Install Dependencies
 
-## ⚙️ Complete Setup (All Commands Used)
+```
+pip install -r requirements.txt
+```
 
-### 🔹 1. System Setup (Ubuntu EC2)
-```bash
-sudo apt update
-sudo apt install docker.io -y
-```
-# Java for Jenkins
-```bash
-sudo apt install openjdk-21-jre-headless -y
-```
-# Verify
-```bash
-java --version
-docker --version
-```
-# 🔹 2. Install Jenkins
-```bash
-sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+### 🔹 3. Setup MySQL Database
 
-echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+Login to MySQL and run:
 
-sudo apt update
-sudo apt install jenkins -y
-```
-# 🔹 3. Give Docker Permission
-```bash
-sudo usermod -aG docker ubuntu
-sudo usermod -aG docker jenkins
-sudo systemctl restart jenkins
-sudo reboot
-```
-# 🔹 4. Configure AWS CLI
-```bash
-aws configure
-```
-```bash
-Enter:
-Access Key:
-Secret Key:
-Region: us-east-1
-```
-# Then for Jenkins user:
-```bash
-sudo su - jenkins
-aws configure
-aws sts get-caller-identity
-```
-# 🔹 5. Docker Commands
-```bash
-docker build -t my-node-app .
-docker run -p 3000:3000 my-node-app
-```
-# 🔹 6. ECR Login Command (Used in Jenkins)
-```bash
-aws ecr get-login-password --region us-east-1 \
-| docker login --username AWS --password-stdin 922085930637.dkr.ecr.us-east-1.amazonaws.com
-```
-# 🔹 7. Tag & Push Image
-```bash
-docker tag my-node-app:latest 922085930637.dkr.ecr.us-east-1.amazonaws.com/my-node-app:latest
+```sql
+CREATE DATABASE student_db;
 
-docker push 922085930637.dkr.ecr.us-east-1.amazonaws.com/my-node-app:latest
+USE student_db;
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(15),
+    course VARCHAR(50),
+    address TEXT
+);
 ```
 
 ---
 
-## ☁️ Amazon ECR Setup
+### 🔹 4. Configure Database Connection
 
-* Created ECR repository
-* Authenticated Docker using AWS CLI
-* Pushed image manually (initial test)
+Update database credentials inside your Flask app:
 
----
-
-## 🔄 Jenkins Pipeline
-
-Pipeline stages:
-
-* Clone Code
-* Build Docker Image
-* Login to ECR
-* Tag Image
-* Push Image
+```
+host="localhost"
+user="root"
+password="yourpassword"
+database="student_db"
+```
 
 ---
 
-## ⚡ AWS Lambda Integration
+### 🔹 5. Run Application
 
-* Lambda function created (Python/Node.js)
-* Triggered after image push
-* Used for:
+```
+python app.py
+```
 
-  * Logging
-  * Notifications
+Open in browser:
+
+```
+http://localhost:5000
+```
+
+---
+
+## 🔄 Jenkins CI/CD Pipeline
+
+This project uses Jenkins to automate build and deployment.
+
+### 📌 Pipeline Stages:
+
+1. Clone GitHub Repository
+2. Install Dependencies
+3. Run Flask Application
+
+### 📌 Sample Jenkinsfile:
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/<your-username>/flask-student-registration-jenkins.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip3 install -r requirements.txt'
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                sh 'nohup python3 app.py &'
+            }
+        }
+    }
+}
+```
 
 ---
 
 ## 📸 Screenshots
 
-### 🖥️ EC2 Instance Running
-Shows that the server is up and Jenkins is hosted on it.
+(Add screenshots here)
 
-![EC2 Running](images/ec2-running.png)
-
----
-
-### ⚙️ Jenkins Pipeline Success
-Pipeline executed successfully with all stages completed.
-
-![Jenkins Pipeline](images/jenkins-success.png)
+* Registration Form
+* Student List Page
+* Jenkins Pipeline Success
 
 ---
 
-### 🐳 Docker Build Logs
-Docker image build process inside Jenkins.
+## 🌐 Deployment (Optional)
 
-![Docker Build](images/docker-build.png)
-
----
-
-### 📦 Amazon ECR Repository
-Docker image successfully pushed to ECR.
-
-![ECR Image](images/ecr-image.png)
+The application can be deployed on AWS EC2 instance by installing Python, MySQL, and Jenkins.
 
 ---
 
-### ⚡ AWS Lambda Triggered
-Lambda function executed after deployment.
+## 🧠 How It Works
 
-![Lambda Logs](images/lambda-logs.png)
-  
-
----
-
-## 🧩 Challenges Faced
-
-* Jenkins AWS credentials issue
-* Docker permission issues
-* ECR login failure
+1. User fills the registration form
+2. Flask processes the request
+3. Data is stored in MySQL database
+4. User is redirected to the students page
+5. All records are displayed in table format
 
 ---
 
-## ✅ Final Outcome
+## 🔗 GitHub Repository
 
-* Fully automated CI/CD pipeline
-* Docker image build & push automated
-* Lambda triggered successfully
+Add your repository link here:
+
+```
+https://github.com/<your-username>/flask-student-registration-jenkins
+```
 
 ---
 
-## 🚀 Future Enhancements
+## 🎯 Future Enhancements
 
-* Integrate SNS for notifications
-* Deploy to ECS
-* Use Terraform for infrastructure
+* Edit/Delete student records
+* Search functionality
+* User authentication system
+* Docker containerization
+* Deployment with Nginx & Gunicorn
 
 ---
 
 ## 👨‍💻 Author
-
 **Pratiksha Lavand**  
 ☁️ Aspiring Cloud & DevOps Engineer  
 🔗 GitHub: [github.com/your-username](https://github.com/pratikshalavand98/)  
@@ -281,6 +208,4 @@ Lambda function executed after deployment.
 
 ---
 
-## ⭐ Conclusion
-
-This project demonstrates a complete CI/CD pipeline integrating Docker, Jenkins, AWS ECR, and Lambda for automated deployment workflows.
+This project is for educational purposes.
